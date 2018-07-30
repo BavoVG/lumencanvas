@@ -24,11 +24,11 @@ LumenCanvas is an open source HTML5 drawing tool based on Fabric.js & JQuery. Yo
 Here's a list of available settings.
 ```js
 new LumenCanvas({
-    selector : "",
-		textStetting: {familty:'Arial',size:16},
-		spellcheck: false, /// set this true if you want to enable spellcheck in text tool
-		width : window.innerWidth-100, // default will be window width
-		height : 548,
+    	selector : "",
+	textStetting: {familty:'Arial',size:16},
+	spellcheck: false, /// set this true if you want to enable spellcheck in text tool
+	width : window.innerWidth-100, // default will be window width
+	height : 548,
 })
 ```
 
