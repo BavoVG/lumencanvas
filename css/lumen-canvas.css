@@ -430,19 +430,19 @@
 	width: 248px;
 }
 .lumen-edit-toolbar .lumen-edit-button.lumen-send-back img{
-	top: 0px;
+	top: -2px;
 	left: -2px;
 }
 .lumen-edit-toolbar .lumen-edit-button.lumen-bring-front img{
-	top: -35px;
+	top: -37px;
 	left: -2px;
 }
 .lumen-edit-toolbar .lumen-edit-button.lumen-send-back-multi img{
-	top: -70px;
+	top: -72px;
 	left: -2px;
 }
 .lumen-edit-toolbar .lumen-edit-button.lumen-bring-front-multi img{
-	top: -105px;
+	top: -107px;
 	left: -2px;
 }
 .lumen-edit-toolbar .lumen-edit-button{
@@ -452,11 +452,12 @@
 	height: 30px;
 	position: relative;
 	cursor: pointer;
+	border: 1px solid #d8d8d8;
 }
 .lumen-edit-toolbar .lumen-edit-button.lumen-trash img{
 	width: 28px;
     height: 25px;
-    top: 5px;
+    top: 3px;
     position: relative;
 }
 /*Edit toolbar*/
