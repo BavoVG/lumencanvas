@@ -25,10 +25,16 @@ Here's a list of available settings.
 ```js
 new LumenCanvas({
     	selector : "",
-	textStetting: {familty:'Arial',size:16},
-	spellcheck: false, /// set this true if you want to enable spellcheck in text tool
-	width : window.innerWidth-100, // default will be window width
+	spellcheck: false,
+	showEditToolbar : true,// it will show bring/send object backward/forward
+	width : window.innerWidth-100,
 	height : 548,
+	defaultBackgroundColor : "#fff",
+	defaultFillColor : "#797777",
+	defaultBorderColor : "#000",
+	defaultActiveTool: "Pencil",// other values : Polygon Line Rectangle Ellipse Text Pan
+	defaultPencilThickness: 6,// integer value from 1 to 30
+	clearAllOverwrite: undefined, /// this to overrite the clear method with a custom message. If you use this you should 	call ClearAll like : canvas.ClearAll();
 })
 ```
 
