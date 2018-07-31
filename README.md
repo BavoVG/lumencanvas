@@ -25,7 +25,7 @@ Here's a list of available settings.
 ```js
 new LumenCanvas({
     	selector : "",
-	spellcheck: false,
+	spellcheck: false, // enable/disable spellcheck when adding text object
 	showEditToolbar : true,// it will show bring/send object backward/forward
 	width : window.innerWidth-100,
 	height : 548,
@@ -34,7 +34,7 @@ new LumenCanvas({
 	defaultBorderColor : "#000",
 	defaultActiveTool: "Pencil",// other values : Polygon Line Rectangle Ellipse Text Pan
 	defaultPencilThickness: 6,// integer value from 1 to 30
-	clearAllOverwrite: undefined, /// this to overrite the clear method with a custom message. If you use this you should 	call ClearAll like : canvas.ClearAll();
+	clearAllOverwrite: undefined, /// this to overrite the clear method with a custom message.
 })
 ```
 
