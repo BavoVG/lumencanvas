@@ -50,14 +50,14 @@ new LumenCanvas({
  ### GetDataURL(options) @param {options} see below defaultOptions object.
  Open the drawing in a new tab or return the URL string.
  ```js
- var defaultOptions = {
-		format: 'png',
-		left: 0,
-		top: 0,
-		width: 500,
-		height: 350,
-		openInNewTab : false
-	}
+ options = {
+	format: 'png',
+	left: 0,
+	top: 0,
+	width: 500,
+	height: 350,
+	openInNewTab : false
+}
 ```
  
  
