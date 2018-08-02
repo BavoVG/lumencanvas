@@ -2,6 +2,7 @@
 Simple Javascript undo and redo.
 https://www.mystorybook.com/books/new/
 https://www.shutterstock.com/editor/
+http://wickeditor.com/wick-editor/
 https://github.com/ArthurClemens/Javascript-Undo-Manager
 */
 
@@ -161,6 +162,8 @@ var point = new fabric.Point(-20, -140);
 $this._fabricCanvas.absolutePan(point);
 
 */
+var keysPressed = [];
+var ctrlCode = 17;
 function LumenCanvas (settings) {
 	this.defaultSettings = {
 		selector : "",
@@ -168,13 +171,22 @@ function LumenCanvas (settings) {
 		showEditToolbar : true,// it will show bring/send object backward/forward
 		width : window.innerWidth-100,
 		height : 548,
+		gridDistance: 50,
 		defaultBackgroundColor : "#fff",
 		defaultFillColor : "#797777",
 		defaultBorderColor : "#000",
+		showPalette: true,
+		defaultPalette: [
+			['black', 'white', 'blanchedalmond', 'rgb(255, 128, 0);'],
+			['hsv 100 70 50', 'red', 'yellow', 'green'],
+			['blue', 'violet', 'rgb(38, 200, 214)', 'rgb(112, 7, 107)'],
+		],
+		paletteMaxSelectionSize: 4,
 		defaultActiveTool: "Pencil",// other values : Polygon Line Rectangle Ellipse Text Pan
 		defaultPencilThickness: 6,// integer value from 1 to 30
 		clearAllOverwrite: undefined, /// this to overrite the clear method with a custom message. If you use this you should call ClearAll like : canvas.ClearAll();
 	}
+	this.gridImagesrc = 'img/grid2.png';
 	this._fabricCanvas = undefined;
 	this._activeTool = undefined;
 	this._thickness = 2;
@@ -226,23 +238,60 @@ LumenCanvas.prototype.InitCanvas = function() {
 		</div>\
 	</div>';
 	$this.element.append(defaultHtml);
-	$this._fabricCanvas = new fabric.Canvas($this.element.find("canvas")[0] , {  hoverCursor: 'pointer', selection: false, backgroundColor : $this.defaultSettings.defaultBackgroundColor });
+	$this._fabricCanvas = new fabric.Canvas($this.element.find("canvas")[0] , {  
+		hoverCursor: 'pointer', 
+		selection: false, 
+		backgroundColor : $this.defaultSettings.defaultBackgroundColor,
+		preserveObjectStacking  : true,
+	});
+	$this._fabricCanvas.setBackgroundColor({source: this.gridImagesrc, repeat: 'repeat'}, function () {
+		$this._fabricCanvas.renderAll();
+	});
+	
 	$this._fabricCanvas.hoverCursor = 'move';
 	$this._fabricCanvas.setHeight($this.defaultSettings.height);
 	$this._fabricCanvas.setWidth($this.defaultSettings.width);
 	$this.defaultSettings.mode = "add";
 	var currentShape;
 	fabric.util.addListener(window,"dblclick", function (e) { 
-		
 		$this.ClosePolygon($this);
 	});
+	fabric.util.addListener(window, 'keydown', function (e) {
+		var $this = e.currentTarget.$this;
+		var obj = $this._fabricCanvas.getActiveObject();
+		if(obj != undefined){
+			e.preventDefault();
+			if (e.keyCode == 37) { /// left
+				obj.left -= 2;
+			} else if(e.keyCode == 39) { /// right
+				obj.left += 2;
+			} else if (e.keyCode == 38) { /// top
+				obj.top -= 2;
+			} else if(e.keyCode == 40) { /// bottom
+				obj.top += 2;
+			}
+			$this._fabricCanvas.renderAll();
+		}
+	});
 	fabric.util.addListener(window, 'keyup', function (e) {
+		var $this = e.currentTarget.$this;
+		var bIsCtrlOn = keysPressed.indexOf(ctrlCode) >= 0;
 		if (e.keyCode === 27) {
-			var $this = GetLumenCanvasInstance(e.target);
 			$this.ClosePolygon($this);
+		} else if (e.keyCode === 46) {
+			var obj = $this._fabricCanvas.getActiveObject();
+			if(obj != undefined){
+				$this._fabricCanvas.remove(obj);
+				$this._fabricCanvas.renderAll();
+			}
+		} else if(bIsCtrlOn && e.key == 'z') {
+			$this.element.find('.lumen-undo').trigger('click');
+		} else if(bIsCtrlOn && e.key == 'y') {
+			$this.element.find('.lumen-redo').trigger('click');
 		}
 	});
 	$this._InitToolbar();
+	$this._InitKeyboardShortcuts();
 	$this._InitColorPickers();
 	$this._OnObjectAdded($this);
 	$this._OnObjectSelected($this);
@@ -254,12 +303,37 @@ LumenCanvas.prototype.InitCanvas = function() {
 	
 }
 /**
+ * Shortcut for undo, redo & delete.
+ */
+LumenCanvas.prototype._InitKeyboardShortcuts = function() {
+	
+	function lumenKeyDown(e) {
+		switch(e.type) {
+			case "keydown" :
+				keysPressed.push(e.keyCode);
+				break;
+		}
+	}
+	function lumenKeyUp(e) {
+		var idx = keysPressed.indexOf(ctrlCode);
+		if (idx >= 0 && e.keyCode == ctrlCode){
+			keysPressed = [];
+		}
+	}
+	$(document).off("keydown", lumenKeyDown).on("keydown", lumenKeyDown);
+	$(document).off("keyup", lumenKeyUp).on("keyup", lumenKeyUp);
+}
+/**
  * Inisialize color pickers.
  */
 LumenCanvas.prototype._InitColorPickers = function() {
 	$this = this;
 	$this.element.find("#fillPicker").spectrum({
 		color: $this.defaultSettings.defaultFillColor,
+		showPalette: $this.defaultSettings.showPalette,
+		palette: $this.defaultSettings.defaultPalette,
+		maxSelectionSize: $this.defaultSettings.paletteMaxSelectionSize,
+		hideAfterPaletteSelect:true,
 		showAlpha: true,
 		showButtons: false,
 		move: function(color) {
@@ -281,6 +355,10 @@ LumenCanvas.prototype._InitColorPickers = function() {
 	});
 	$this.element.find("#strokePicker").spectrum({
 		color: $this.defaultSettings.defaultBorderColor,
+		showPalette: $this.defaultSettings.showPalette,
+		palette: $this.defaultSettings.defaultPalette,
+		maxSelectionSize: $this.defaultSettings.paletteMaxSelectionSize,
+		hideAfterPaletteSelect:true,
 		showAlpha: true,
 		showButtons: false,
 		move: function(color) {
@@ -304,21 +382,26 @@ LumenCanvas.prototype._InitColorPickers = function() {
 	});
 	$this.element.find("#bgPicker").spectrum({
 		color: $this.defaultSettings.defaultBackgroundColor,
+		showPalette: $this.defaultSettings.showPalette,
+		palette: $this.defaultSettings.defaultPalette,
+		maxSelectionSize: $this.defaultSettings.paletteMaxSelectionSize,
+		hideAfterPaletteSelect:true,
 		showButtons: false,
 		move: function(color) {
 			var $this = GetLumenCanvasInstance($(this));
-			$this._fabricCanvas.backgroundColor = color.toHexString(); 
-			$this._fabricCanvas.renderAll();
+			//$this._fabricCanvas.backgroundColor = color.toHexString(); 
+			//$this._fabricCanvas.renderAll();
+			$this.element.find(".cb-disable").trigger("click");
 		}
 	});
-	$this.element.find('#zoomIn').click(function(){
+	$this.element.find('.lumen-zoom-in').click(function(){
 		var $this = GetLumenCanvasInstance($(this));
-		$this._fabricCanvas.setZoom($this._fabricCanvas.getZoom() * 1.1 ) ;
+		$this.SetZoom($this, $this._fabricCanvas.getZoom() + 0.1 ) ;
 	});
 	
-	$this.element.find('#zoomOut').click(function(){
+	$this.element.find('.lumen-zoom-out').click(function(){
 		var $this = GetLumenCanvasInstance($(this));
-		$this._fabricCanvas.setZoom($this._fabricCanvas.getZoom() / 1.1 ) ;
+		$this.SetZoom($this, $this._fabricCanvas.getZoom() - 0.1 ) ;
 	}) ;
 	
 	$this.element.find('.lumen-undo').click(function(){
@@ -1014,7 +1097,7 @@ LumenCanvas.prototype._OnCanvasMouseUp = function($this) {
  */
 LumenCanvas.prototype.HideEditToolbar = function(){
 	var $this = this;
-	$this.element.find('.lumen-options > div').html('');
+	$this.element.find('.lumen-options .active-object-tools').html('');
 }
 /**
  * Show edit toolbar when pan tool is selected.
@@ -1030,7 +1113,7 @@ LumenCanvas.prototype.ShowEditToolbar = function(){
 						<div class="lumen-edit-button lumen-bring-front-multi" title="Bring front one step"><img src="img/back-to-front.png" style=""></div>\
 						<div class="lumen-edit-button lumen-trash" title="Delete selected object"><img src="img/trash.png" style=""></div>\
 					</div>';
-		$this.element.find('.lumen-options > div').append(optionsHtml);
+		$this.element.find('.lumen-options .active-object-tools').append(optionsHtml);
 		$this.element.find('.lumen-edit-toolbar .lumen-send-back').click(function() {
 			var $this = GetLumenCanvasInstance($(this));
 			var obj = $this._fabricCanvas.getActiveObject();
@@ -1168,7 +1251,7 @@ LumenCanvas.prototype.ShowTextToolbar = function(){
 						<option value="engagement">Engagement</option>\
 					</select>*/
 	
-	$this.element.find('.lumen-options > div').html(optionsHtml);
+	$this.element.find('.lumen-options .active-object-tools').html(optionsHtml);
 	$this._textStetting = {
 		family : $this.element.find('.lumen-text-toolbar #font-family').val(),
 		size : $this.element.find('.lumen-text-toolbar #font-size').val()
@@ -1214,7 +1297,7 @@ LumenCanvas.prototype.ShowTextToolbar = function(){
  */
 LumenCanvas.prototype.HideTextToolbar = function(){
 	var $this = this;
-	$this.element.find('.lumen-options > div').html('');
+	$this.element.find('.lumen-options .active-object-tools').html('');
 }
 /**
  * Hide text toolbar when other tool rather than text is selected.
@@ -1267,8 +1350,20 @@ LumenCanvas.prototype._InitToolbar = function() {
 					</div>\
 				</div>\
 			</div>';
+			
 		toolbarHtml += '<div class="lumen-options horz-toolbar">\
-							<div >\
+							<div class="active-object-tools">\
+							</div>\
+							<div class="field switch grid-switch">\
+								<label style="margin-right: 8px;font-size: 16px;">Grid </label>\
+								<label class="cb-enable selected"><span>On</span></label>\
+								<label class="cb-disable"><span>Off</span></label>\
+								<input type="checkbox" id="checkbox" class="checkbox" name="grid" />\
+							</div>\
+							<div class="lumen-zoom">\
+								<div id="zoomOut" class="lumen-zoom-out toolbar-button thin-button" title="Zoom out" style="background-image:url(img/zoom-out.png);"></div>\
+								<div class="zoom-level-label">100%</div>\
+								<div id="zoomIn" class="lumen-zoom-in toolbar-button thin-button" title="Zoom In" style="background-image:url(img/zoom-in.png);width: 25px;height: 25px;float: left;"></div>\
 							</div>\
 						</div>';
 	$this.element.append(toolbarHtml);
@@ -1372,12 +1467,49 @@ LumenCanvas.prototype._InitToolbar = function() {
 		$this._EnableFreeHandDrawing();
 		$(this).addClass('selected');
 	});
+	/// Checkbox handler
+	$this.element.find(".cb-enable").click(function(){
+		var parent = $(this).parents('.switch');
+		$('.cb-disable',parent).removeClass('selected');
+		$(this).addClass('selected');
+		$('.checkbox',parent).prop('checked', true);
+		//----
+		var $this = GetLumenCanvasInstance($(this));
+		
+		var isChecked = $('.checkbox',parent).prop("checked");
+		if(isChecked) {
+			$this._fabricCanvas.setBackgroundColor({source: $this.gridImagesrc, repeat: 'repeat'}, function () {
+				$this._fabricCanvas.renderAll();
+			});
+		} else {
+			$this._fabricCanvas.backgroundColor = $this.element.find("#bgPicker").spectrum('get').toHexString();
+			$this._fabricCanvas.renderAll();
+		}
+	});
+	$this.element.find(".cb-disable").click(function(){
+		var parent = $(this).parents('.switch');
+		$('.cb-enable',parent).removeClass('selected');
+		$(this).addClass('selected');
+		$('.checkbox',parent).prop('checked', false);
+		//----
+		var $this = GetLumenCanvasInstance($(this));
+		
+		var isChecked = $('.checkbox',parent).prop("checked");
+		if(isChecked) {
+			$this._fabricCanvas.setBackgroundColor({source: $this.gridImagesrc, repeat: 'repeat'}, function () {
+				$this._fabricCanvas.renderAll();
+			});
+		} else {
+			$this._fabricCanvas.backgroundColor = $this.element.find("#bgPicker").spectrum('get').toHexString();
+			$this._fabricCanvas.renderAll();
+		}
+	});
 }
 /**
  * Hide pencil toolbar when other tool rather than pencil is selected.
  */
 LumenCanvas.prototype._HideFreeDrawingToolbar = function(){
-	this.element.find('.lumen-options > div').html('');
+	this.element.find('.lumen-options .active-object-tools').html('');
 }
 
 /**
@@ -1448,7 +1580,10 @@ LumenCanvas.prototype.GetDataURL = function(options){
  * @param {val} zoom value. One is the default value.
  */
 LumenCanvas.prototype.SetZoom = function($this, val){
+	val = Math.round( val * 10 ) / 10;/// round to first decimal.
+	if(val < 0.3 || val > 1.4) return;
 	$this._fabricCanvas.setZoom(val);
+	$('.lumen-options.horz-toolbar .zoom-level-label').text(Math.floor($this._fabricCanvas.getZoom()*100) + '%');
 }
 /**
  *  Disable all selected objects.
@@ -1466,6 +1601,10 @@ LumenCanvas.prototype._DisableAllObjectsSelection = function(){
  */
 LumenCanvas.prototype._SetActiveTool = function(toolName){
 	var $this = this;
+	/// user try to change tool while creating polygon
+	if(typeof currentShape != 'undefined' && $this.defaultSettings.mode === 'edit') {
+		$this.ClosePolygon($this);
+	}
 	var thisCanvas = $this._fabricCanvas;
 	$this.element.find('.toolbar-button.selected').removeClass('selected');
 	if(toolName != "text" && $this.element.find('.insert-text-container').length > 0) {
@@ -1590,7 +1729,7 @@ LumenCanvas.prototype._ShowThicknessToolbar = function(){
 					</div>\
 				</div>';
 	
-	$this.element.find('.lumen-options > div').html(optionsHtml);
+	$this.element.find('.lumen-options .active-object-tools').html(optionsHtml);
 	$this._thickness = this.element.find('.lumen-thickness-toolbar .square-toolbar-button.lumen-thickness.selected').data('radius');
 	
 	$this.element.find('.lumen-thickness-toolbar').on('click','.square-toolbar-button.lumen-thickness',function() {
@@ -1638,7 +1777,7 @@ LumenCanvas.prototype._ShowFreeDrawingToolbar = function(){
 							</select>\
 							</label>\
 							<label for="drawing-line-width">' + this.l10n['LINE_WIDHT_LABEL'] + ' : <input type="range" value="' + $this.defaultSettings.defaultPencilThickness + '" min="1" max="90" id="drawing-line-width" style="position: relative;top: 7px;"> &nbsp;&nbsp;<span class="info">30</span></label>';
-	$this.element.find('.lumen-options > div').html(optionsHtml);
+	$this.element.find('.lumen-options .active-object-tools').html(optionsHtml);
 	$this.element.find('#drawing-mode-selector').change(function() {
 		var $this = GetLumenCanvasInstance($(this));
 		var thisCanvas = $this._fabricCanvas;

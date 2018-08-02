@@ -156,6 +156,7 @@
     background-repeat: no-repeat;
     background-position: center center;
 }
+
 .lumen-canvas .color-well {
     font-size: 10px;
     float: left;
@@ -231,7 +232,33 @@
     line-height: 30px;
     margin: 0 0.25em 0 0.25em;
     font-size: 16px;
+    font-family: arial;
     float: left;
+}
+.lumen-options.horz-toolbar .lumen-zoom{
+	position: absolute;
+	width: 105px;
+	height: 35px;
+	bottom: 0px;
+	right: 15px;
+	z-index: 1000;
+}
+.lumen-options.horz-toolbar .lumen-zoom-in,
+.lumen-options.horz-toolbar .lumen-zoom-out{
+	width: 25px;
+	height: 25px;
+	float: left;
+	cursor: pointer;
+	background-size: 80% auto;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.lumen-options.horz-toolbar .zoom-level-label {
+	float: left;
+	line-height: 26px;
+	font-weight: bold;
+	padding: 0px 6px;
+	font-family: arial;
 }
 .lumen-canvas .horz-toolbar .square-toolbar-button {
     border: 2px solid transparent;
@@ -513,3 +540,31 @@
     width: 180px;
     padding: 4px;
 }
+/** checkbox switch style */
+.lumen-canvas .grid-switch{
+    position: absolute;
+    width: 120px;
+    height: 35px;
+    bottom: 3px;
+    right: 170px;
+    z-index: 1000;
+}
+.lumen-canvas .grid-switch label {
+    line-height: 30px;
+    margin: 0px;
+    font-size: 16px;
+    float: left;
+	font-size: 12px;
+    font-family: cursive;
+}
+.cb-enable, .cb-disable, .cb-enable span, .cb-disable span { background: url(../img/switch.gif) repeat-x; display: block; float: left; }
+.cb-enable span, .cb-disable span { line-height: 30px; display: block; background-repeat: no-repeat; font-weight: bold; }
+.cb-enable span { background-position: left -90px; padding: 0 10px; }
+.cb-disable span { background-position: right -180px;padding: 0 10px; }
+.cb-disable.selected { background-position: 0 -30px; }
+.cb-disable.selected span { background-position: right -210px; color: #fff; }
+.cb-enable.selected { background-position: 0 -60px; }
+.cb-enable.selected span { background-position: left -150px; color: #fff; }
+.switch label { cursor: pointer; }
+.switch input { display: none; }
+	
