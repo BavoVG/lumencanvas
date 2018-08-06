@@ -5,22 +5,18 @@
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script src="js/jquery/jquery-1.12.4.js"></script>
 	<script src="js/jquery/jquery-ui.js"></script>
-	<script src="js/lumen-canvas.js"></script>
 	<script src="js/fabricjs/fabric.min.js"></script>
+	<script src="js/lumen-canvas.js"></script>
 	
 	<link rel="stylesheet" href="css/spectrum.css">
     <script src="js/spectrum.js"></script>
   </head>
-  <body >
-	<div id="main_container" ng-app ng-controller="Editor">
-		<div class="crpaint-responsetext" id="cr_paint_item_3" style="">
-			<div id="txtPaintCRResponse_3" class="drawing-canvas toolbar-at-top" style="height: 600px;" data-lc-instance="item_3">
-			</div>
-			<br>
-			<br>
-		</div>
-    </div>
-		
+  <body>
+
+	<div class="drawing-canvas toolbar-at-top" style="height: 600px;">
+	</div>
+	<br>
+
 	<script>
 		new LumenCanvas({
 			selector : ".drawing-canvas",
@@ -29,6 +25,7 @@
 					canvas.ClearAll();
 				}
 			},
+			defaultActiveTool: "Line",
 			defaultPalette: [
 				["#000","#444","#666","#999","#ccc","#eee","#f3f3f3","#fff"],
 				["#f00","#f90","#ff0","#0f0","#0ff","#00f","#90f","#f0f"],

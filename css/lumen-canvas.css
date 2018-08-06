@@ -151,7 +151,9 @@
 .lumen-canvas .lumen-picker .lumen-undo,
 .lumen-canvas .lumen-picker .lumen-redo,
 .lumen-canvas .lumen-picker .lumen-zoom-in,
-.lumen-canvas .lumen-picker .lumen-zoom-out {
+.lumen-canvas .lumen-picker .lumen-zoom-out,
+.lumen-canvas .lumen-picker .lumen-color-fill,
+.lumen-canvas .lumen-picker .lumen-insert-equation {
     background-size: 80% auto;
     background-repeat: no-repeat;
     background-position: center center;
