@@ -2,11 +2,11 @@
 LumenCanvas is an open source HTML5 drawing tool based on Fabric.js & JQuery. You can use it to embed drawing boards in web pages. You can save the drawings as a string or JSON and you can retrive it again. LumenCanvas is an object based drawing tool. You can move the drawn objects around and change the border of the filling color.
 
 ### Preview
-![LumenCanvas Preview](http://wizvalley.com/paint/lumincanvas_preview.png)
+![LumenCanvas Preview](http://lumencanvas.com/img/lumincanvas_preview.png)
 
 
 ### Online Demo Link
-[Click Here...](http://wizvalley.com/paint/)
+[Click Here...](http://lumencanvas.com/)
 
 
 ### Example
