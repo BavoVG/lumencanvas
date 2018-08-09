@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
+	<title>Lumen Canvas Paint</title>
+	<meta name="Description" content="LumenCanvas is a JavaScript drawing tool based on FabricJS and JQuery. LumenCanvas is an HTML5 paint tool that gives you the ability to draw and save you drawing as JSON, SNG and PNG.">
+	<meta name="Keywords" content="javascript paint,js paint,jquery paint, jquery drawing tool, js drawing tool, html5 paint, html paint,canvas paint, canvas drawing tool">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Rancho" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
 	<link rel="stylesheet" href="css/lumen-canvas.css">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script src="js/jquery/jquery-1.12.4.js"></script>
@@ -10,33 +18,370 @@
 	
 	<link rel="stylesheet" href="css/spectrum.css">
     <script src="js/spectrum.js"></script>
+	<style>
+	@media (max-width: 760px){
+		body aside {
+			width: 100%;
+			min-height: auto;
+			border-right: 0px solid #ccc;
+		}
+		body section {
+			width: 100%;
+		}
+		html body{
+			width: 96%;
+			margin: 0 2%;
+		}
+	}
+	*{font-family: 'Open Sans', sans-serif;}
+	#page-header{
+		font-family: 'Rancho', cursive;
+		text-align: center;
+		font-size: 60px;
+		color: #FFC107;
+	}
+	body{
+		width: 90%;
+		max-width: 1200px;
+		margin: 0 auto;
+	}
+	aside {
+		width: 20%;
+		float: left;
+		margin-left: 1%;
+		font-weight: bold;
+		font-size: 18px;
+		margin-right: 5%;
+		border-right: 1px solid #ccc;
+		min-height: 2000px;
+	}
+	aside li a{
+		font-size: 16px;
+		font-weight: 100;
+		font-family: arial;
+		padding-bottom: 4px;
+		padding-bottom: 8px;.
+		text-decoration: none;
+	}
+	section {
+		width: 66%;
+		float: left;
+	}
+	section h3{
+		font-family: cursive;
+		font-weight: 400;
+		margin-top: 0PX;
+	}
+	section h2{
+		border-bottom: 1px solid #ccc;
+		padding-bottom: 14px;
+		margin-top: 35px;
+	}
+	article::after{
+		content: " ";
+		clear:both;
+		display: block;
+	}
+	footer{
+		width: 100%;
+		text-align: center;
+		margin: 30px 0px;
+		clear: both;
+		border-top: 1px solid #ccc;
+		padding-top: 22px;
+	}
+	.code-section{
+		background-color: #dedede;
+		border-radius: 4px;
+		padding: 2px 12px;
+		margin: 35px 0px;
+	}
+	pre{
+		font-family: Monaco, Consolas, "Lucida Console", monospace;
+		font-size: 13px;
+		margin-top: 2px;
+	}
+	.btn.btn-info {
+		color: #ffffff;
+		text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+		background-color: #49afcd;
+		background-image: -moz-linear-gradient(top, #5bc0de, #2f96b4);
+		background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#5bc0de), to(#2f96b4));
+		background-image: -webkit-linear-gradient(top, #5bc0de, #2f96b4);
+		background-image: -o-linear-gradient(top, #5bc0de, #2f96b4);
+		background-image: linear-gradient(to bottom, #5bc0de, #2f96b4);
+		background-repeat: repeat-x;
+		border-color: #2f96b4 #2f96b4 #1f6377;
+		border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5bc0de', endColorstr='#ff2f96b4', GradientType=0);
+		filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+	}
+	.btn {
+		display: inline-block;
+		padding: 4px 12px;
+		margin-bottom: 0;
+		font-size: 14px;
+		line-height: 20px;
+		color: #333333;
+		text-align: center;
+		text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+		vertical-align: middle;
+		cursor: pointer;
+		background-color: #f5f5f5;
+		background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+		background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+		background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+		background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+		background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+		background-repeat: repeat-x;
+		border: 1px solid #cccccc;
+		border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+		border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+		border-bottom-color: #b3b3b3;
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+		border-radius: 4px;
+		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
+		filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+		-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+		-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+	}
+	</style>
+	
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<script>
+	  (adsbygoogle = window.adsbygoogle || []).push({
+		google_ad_client: "ca-pub-9964771359653560",
+		enable_page_level_ads: true
+	  });
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-123634923-1"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-123634923-1');
+	</script>
+
+	<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-TQB44SD');</script>
+	<!-- End Google Tag Manager -->
   </head>
   <body>
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TQB44SD"
+	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
 
-	<div class="drawing-canvas toolbar-at-top" style="height: 600px;">
-	</div>
+	<header>
+		<h1 id="page-header">LumenCanvas</h1>
+	</header>
+	<article>
+		<aside>
+			Table Of Contents
+			<ul class="simple">
+				<li><a href="#installing">Installation</a></li>
+				<li><a href="#examples">Examples</a></li>
+				<li><a href="#">API</a></li>
+			</ul>
+			<br>
+			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+			<input type="hidden" name="cmd" value="_s-xclick">
+			<input type="hidden" name="hosted_button_id" value="ZW3M32HKA7ZB4">
+			<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+			<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+			</form>
+
+		</aside>
+		<section>
+			<h2 style="margin-top: 0px;">Introduction</h2>
+			<h3>LumenCanvas is an open source HTML5 drawing tool based on Fabric.js & JQuery. You can use it to embed drawing boards in web pages. You can save the drawings as a string or JSON and you can retrive it again. LumenCanvas is an object based drawing tool. You can move the drawn objects around and change the border of the filling color.</h3>
+			<div id="drawing-canvas" class="drawing-canvas" style="height: 600px; margin: 0 auto;"></div>
+			<br>
+			<br>
+			<p>Lumen Canvas&#8217;s features:</p>
+			<ul class="simple">
+				<li>Basic drawing tools</li>
+				<li>Panning and zooming</li>
+				<li>Background images/shapes and watermarks</li>
+				<li>Retina support</li>
+				<li>Saving and loading JSON</li>
+				<li>Exporting drawings to PNG and SVG</li>
+				<li>Events</li>
+			</ul>
+		</section>
+		
+		<section>
+			<h2 id="installing" style="margin-top: 0px;">Installation</h2>
+				<div class="code-section">
+<pre>
+<span style="color:#062873;">&lt;html&gt;</span>
+    <span style="color:#062873;">&lt;head&gt;</span>
+        <span style="color:#408090;">&lt;!-- dependency : JQuery --&gt;</span>
+        <span style="color:#062873;">&lt;script</span> src="js/jquery/jquery-1.12.4.js"&gt;<span style="color:#062873;">&lt;/script&gt;</span>
+        <span style="color:#062873;">&lt;script</span> src="js/jquery/jquery-ui.js"&gt;<span style="color:#062873;">&lt;/script&gt;</span>
+        <span style="color:#062873;">&lt;link</span> rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"<span style="color:#062873;">&gt;</span>
+        <span style="color:#408090;">&lt;!-- dependency : FabricJS & Spectrum plugin --&gt;</span>
+        <span style="color:#062873;">&lt;script</span> src="js/fabricjs/fabric.min.js"&gt;<span style="color:#062873;">&lt;/script&gt;</span>
+        <span style="color:#062873;">&lt;link</span> rel="stylesheet" href="css/spectrum.css"<span style="color:#062873;">&gt;</span>
+        <span style="color:#062873;">&lt;script</span> src="js/spectrum.js"&gt;<span style="color:#062873;">&lt;/script&gt;</span>
+        <span style="color:#408090;">&lt;!-- LumenCanvas --&gt;</span>
+        <span style="color:#062873;">&lt;link</span> rel="stylesheet" href="css/lumen-canvas.css"<span style="color:#062873;">&gt;</span>
+        <span style="color:#062873;">&lt;script</span> src="js/lumen-canvas.js"&gt;<span style="color:#062873;">&lt;/script&gt;</span>
+    <span style="color:#062873;">&lt;/head&gt;</span>
+    <span style="color:#062873;">&lt;body&gt;</span>
+        <span style="color:#062873;">&lt;div id="drawing-canvas" class="drawing-canvas" style="height: 600px; margin: 0 auto;"&gt;<span style="color:#062873;">&lt;/div&gt;</span>
+        <span style="color:#062873;">&lt;script&gt;
+            <span style="color:#3822b5;">new</span> <span style="color:#828282;">LumenCanvas</span> <span style="color:#000;">({</span>
+                <span style="color:#6858b9;">selector</span> : <span style="color:#828282;">"#drawing-canvas"</span>
+            <span style="color:#000;">});</span>
+        <span style="color:#062873;">&lt;script&gt;</span>
+    <span style="color:#062873;">&lt;/body&gt;</span>
+<span style="color:#062873;">&lt;/html&gt;</span>
+</pre>
+				</div>
+		</section>
+		
+		<section id="examples">
+			<div class="canvas-example">
+				<h2>Canvas with watermark</h2>
+				<div id="drawing-canvas2" class="drawing-canvas" style="height: 600px; margin: 0 auto;"></div>
+				<div class="code-section">
+<pre>
+<span style="color:#3822b5;">new</span> <span style="color:#828282;">LumenCanvas</span> <span style="color:#000;">({</span>
+    <span style="color:#6858b9;">selector</span> : <span style="color:#828282;">"#drawing-canvas2"</span>,
+    <span style="color:#6858b9;">showGridButton</span> : <span style="color:#3822b5;">false</span>,
+    <span style="color:#6858b9;">enableGridByDefault</span> : <span style="color:#3822b5;">false</span>,
+    <span style="color:#6858b9;">watermarkImage</span> : <span style="color:#828282;">"img/watermark.png"</span>,
+    <span style="color:#6858b9;">watermarkImageOpacity</span> : <span style="color:#3822b5;">0.8</span>,
+    <span style="color:#6858b9;">width</span> : $(<span style="color:#828282;">"#drawing-canvas2"</span>).width() - 65,
+    <span style="color:#6858b9;">defaultActiveTool</span> : <span style="color:#828282;">"Line"</span>,
+<span style="color:#000;">});</span>
+</pre>
+				</div>
+			<div><!--Example 2-->
+			
+			<div class="canvas-example">
+				<h2>Export Canvas SVG & JSON</h2>
+				<div id="drawing-canvas3" class="drawing-canvas" style="height: 600px; margin: 0 auto;"></div>
+				<br>
+				<button id="export-svg" class="btn btn-info">Export SVG</button> &nbsp;&nbsp;&nbsp;
+				<button id="export-json" class="btn btn-info">Export JSON</button>
+				<h4>SVG Output</h4>
+				<textarea id="svg-output" style="display: block;width: 100%;height: 160px;margin-top: 20px;"></textarea>
+				<h4>JSON Output</h4>
+				<textarea id="json-output" style="display: block;width: 100%;height: 100px;margin-top: 20px;"></textarea>
+				
+				<div class="code-section">
+<pre>
+<span style="color:#007020">/// Create new instance</span>
+<span style="color:#3822b5;">var</span> paintInstance = <span style="color:#3822b5;">new</span> <span style="color:#828282;">LumenCanvas</span> <span style="color:#000;">({</span>
+    <span style="color:#6858b9;">selector</span> : <span style="color:#828282;">"#drawing-canvas2"</span>,
+    <span style="color:#6858b9;">showGridButton</span> : <span style="color:#3822b5;">false</span>,
+    <span style="color:#6858b9;">enableGridByDefault</span> : <span style="color:#3822b5;">false</span>,
+    <span style="color:#6858b9;">watermarkImage</span> : <span style="color:#828282;">"img/watermark.png"</span>,
+    <span style="color:#6858b9;">watermarkImageOpacity</span> : <span style="color:#3822b5;">0.8</span>,
+    <span style="color:#6858b9;">width</span> : $(<span style="color:#828282;">"#drawing-canvas2"</span>).width() - 65,
+    <span style="color:#6858b9;">defaultActiveTool</span> : <span style="color:#828282;">"Line"</span>,
+<span style="color:#000;">});</span>
+<span style="color:#007020">/// Export SVG</span>
+$(<span style="color:#828282;">"#export-svg"</span>).on(<span style="color:#828282;">"click"</span>,function(){
+    $(<span style="color:#828282;">"#svg-output"</span>).val(paintInstance.GetSVG());
+})
+<span style="color:#007020">/// Export JSON</span>
+$(<span style="color:#828282;">"#export-json"</span>).on(<span style="color:#828282;">"click"</span>,function(){
+    $(<span style="color:#828282;">"#json-output"</span>).val(<span style="color:#3822b5;">JSON.stringify</span>(paintInstance.GetJSON()));
+})
+</pre>
+				</div>
+			<div><!--Example 3-->
+			
+			<div class="canvas-example">
+				<h2>Import JSON</h2>
+				<div id="drawing-canvas4" class="drawing-canvas" style="height: 600px; margin: 0 auto;"></div>
+				<br>
+				<button id="import-json" class="btn btn-info">Set Data</button> &nbsp;&nbsp;&nbsp;
+				<h4>JSON Input</h4>
+				<textarea id="json-input" style="display: block;width: 100%;height: 160px;margin-top: 20px;">{"version":"2.3.3","objects":[{"type":"rect","version":"2.3.3","originX":"left","originY":"top","left":117.5,"top":172.19,"width":484,"height":268,"fill":"#6fa8dc","stroke":"#000000","strokeWidth":2,"strokeDashArray":null,"strokeLineCap":"butt","strokeLineJoin":"miter","strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"clipTo":null,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","transformMatrix":null,"skewX":0,"skewY":0,"rx":0,"ry":0,"name":"rectangle"},{"type":"ellipse","version":"2.3.3","originX":"left","originY":"top","left":178.5,"top":225.19,"width":119,"height":97,"fill":"#93c47d","stroke":"#000000","strokeWidth":2,"strokeDashArray":null,"strokeLineCap":"butt","strokeLineJoin":"miter","strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"clipTo":null,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","transformMatrix":null,"skewX":0,"skewY":0,"rx":59.5,"ry":48.5,"name":"circle"},{"type":"ellipse","version":"2.3.3","originX":"left","originY":"top","left":393.5,"top":226.19,"width":125,"height":95,"fill":"#93c47d","stroke":"#000000","strokeWidth":2,"strokeDashArray":null,"strokeLineCap":"butt","strokeLineJoin":"miter","strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"clipTo":null,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","transformMatrix":null,"skewX":0,"skewY":0,"rx":62.5,"ry":47.5,"name":"circle"},{"type":"rect","version":"2.3.3","originX":"left","originY":"top","left":215.5,"top":361.19,"width":289,"height":56,"fill":"#93c47d","stroke":"#000000","strokeWidth":2,"strokeDashArray":null,"strokeLineCap":"butt","strokeLineJoin":"miter","strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"clipTo":null,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","transformMatrix":null,"skewX":0,"skewY":0,"rx":0,"ry":0,"name":"rectangle"}],"background":"#fff","backgroundImage":{"type":"image","version":"2.3.3","originX":"left","originY":"top","left":0,"top":0,"width":722,"height":545,"fill":"rgb(0,0,0)","stroke":null,"strokeWidth":0,"strokeDashArray":null,"strokeLineCap":"butt","strokeLineJoin":"miter","strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":0.8,"shadow":null,"visible":true,"clipTo":null,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","transformMatrix":null,"skewX":0,"skewY":0,"crossOrigin":"","cropX":0,"cropY":0,"src":"http://localhost:5050/paint-github/lumencanvas-website/img/watermark.png","filters":[]}}</textarea>
+				<div class="code-section">
+<pre>
+<span style="color:#007020">/// Create new instance</span>
+<span style="color:#3822b5;">var</span> paintInstance2 = <span style="color:#3822b5;">new</span> <span style="color:#828282;">LumenCanvas</span> <span style="color:#000;">({</span>
+    <span style="color:#6858b9;">selector</span> : <span style="color:#828282;">"#drawing-canvas4"</span>,
+<span style="color:#000;">});</span>
+$(<span style="color:#828282;">"#import-json"</span>).on(<span style="color:#828282;">"click"</span>,function(){
+    <span style="color:#3822b5;">var</span> JsonData = $(<span style="color:#828282;">"#json-input"</span>).val();
+    paintInstance2.<span style="color:#3822b5;">SetJSON</span>(JsonData);
+})
+</pre>
+				</div>
+			<div><!--Example 4-->
+		</section>
+		
+		
+	</article>
+	<footer>
+		&copy; 2017-2018 Lumen Canvas contributors.
+      Created using <a href="http://fabricjs.com/">FabricJS 2.3.3</a>
+	</footer>
 	<br>
 
 	<script>
 		new LumenCanvas({
-			selector : ".drawing-canvas",
-			clearAllOverwrite: function(canvas){
+			selector : "#drawing-canvas",
+			/*clearAllOverwrite: function(canvas){
 				if(confirm("Custom cleare message?")){
 					canvas.ClearAll();
 				}
-			},
+			},*/
+			showGridButton: true,
+			enableGridByDefault: false,
+			//watermarkImage: "img/watermark.png",
+			watermarkImageOpacity: 0.8,
 			defaultActiveTool: "Line",
-			defaultPalette: [
-				["#000","#444","#666","#999","#ccc","#eee","#f3f3f3","#fff"],
-				["#f00","#f90","#ff0","#0f0","#0ff","#00f","#90f","#f0f"],
-				["#f4cccc","#fce5cd","#fff2cc","#d9ead3","#d0e0e3","#cfe2f3","#d9d2e9","#ead1dc"],
-				["#ea9999","#f9cb9c","#ffe599","#b6d7a8","#a2c4c9","#9fc5e8","#b4a7d6","#d5a6bd"],
-				["#e06666","#f6b26b","#ffd966","#93c47d","#76a5af","#6fa8dc","#8e7cc3","#c27ba0"],
-				["#c00","#e69138","#f1c232","#6aa84f","#45818e","#3d85c6","#674ea7","#a64d79"],
-				["#900","#b45f06","#bf9000","#38761d","#134f5c","#0b5394","#351c75","#741b47"],
-				["#600","#783f04","#7f6000","#274e13","#0c343d","#073763","#20124d","#4c1130"]
-			]
 		});
+		
+		new LumenCanvas({
+			selector : "#drawing-canvas2",
+			showGridButton: false,
+			enableGridByDefault: false,
+			watermarkImage: "img/watermark.png",
+			watermarkImageOpacity: 0.8,
+			defaultActiveTool: "Line",
+		});
+		
+		var paintInstance = new LumenCanvas({
+			selector : "#drawing-canvas3",
+			showGridButton: false,
+			enableGridByDefault: false,
+			watermarkImage: "img/watermark.png",
+			watermarkImageOpacity: 0.8,
+			defaultActiveTool: "Line",
+		});
+		$("#export-svg").on("click",function(){
+			$("#svg-output").val(paintInstance.GetSVG());
+		});
+		$("#export-json").on("click",function(){debugger;
+			$("#json-output").val(JSON.stringify(paintInstance.GetJSON()));
+		});
+		
+		
+		var paintInstance2 = new LumenCanvas({
+			selector : "#drawing-canvas4",
+		});
+		$("#import-json").on("click",function(){
+			var JsonData = $("#json-input").val();
+			paintInstance2.SetJSON(JsonData);
+		});
+		
 	</script>
   </body>
 </html>

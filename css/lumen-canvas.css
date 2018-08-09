@@ -16,7 +16,7 @@
     cursor: default;
     opacity: 0.3
 }
-.lumen-canvas.toolbar-at-top .lumen-drawing {
+.lumen-canvas .lumen-drawing {
     bottom: 0;
     top: 0;
 }
@@ -41,7 +41,7 @@
 .lumen-canvas {
     position: relative;
     background-color: #ddd;
-    border: 1px solid #099;
+    border: 1px solid #8a8a8a;
     min-height: 400px;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -50,6 +50,7 @@
     -ms-user-select: none;
     -ms-touch-action: none;
     user-select: none;
+    border-top: 1px solid #ccc;
 }
 .lumen-canvas,
 .lumen-canvas * {
@@ -67,7 +68,7 @@
     left: 0;
     bottom: 0;
     width: 61px;
-    background-color: #e6e6e6
+    background-color: #d6d6d6;
 }
 .lumen-canvas .lumen-drawing {
     right: 0;
@@ -100,7 +101,7 @@
 }
 .lumen-canvas .lumen-picker {
     z-index: 2;
-    border-right: 1px solid #099;
+    border-right: 1px solid #8c8c8c;
 }
 .lumen-canvas .lumen-picker .toolbar-button {
     width: 30px;
@@ -264,10 +265,9 @@
 }
 .lumen-canvas .horz-toolbar .square-toolbar-button {
     border: 2px solid transparent;
-    border-radius: 50%;
+    border-radius: 5px;
     margin: 1px 5px;
     /* border:1px solid #aaa; */
-    
     width: 35px;
     height: 35px;
     float: left;
@@ -312,7 +312,7 @@
 .lumen-canvas.toolbar-at-bottom .polygon-toolbar {
     top: -100%
 }
-.lumen-canvas.toolbar-at-top .polygon-toolbar {
+.lumen-canvas .polygon-toolbar {
     top: 100%
 }
 .lumen-canvas .lumen-options {
@@ -411,19 +411,19 @@
     width: 29px;
     border-radius: 0px !important;
 }
-.lumen-canvas.toolbar-at-top .lumen-options {
+.lumen-canvas .lumen-options {
     bottom: 0px;
-    border-top: 1px solid #099;
+    border-top: 1px solid #8c8c8c;
     padding: 5px 10px;
     height: 50px;
-    background: #ffffff;
-    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJod…EiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: #d6d6d6;
+    /* background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJod…EiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+); */
     background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #e5e5e5));
-    background: -webkit-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
+    /* background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #e5e5e5)); */
+    /* background: -webkit-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); */
     background: -o-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
     background: -ms-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
-    background: linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%);
+    /* background: linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%); */
     filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5', GradientType=0);
 }
 .lumen-canvas .color-well label {
@@ -481,7 +481,7 @@
 	height: 30px;
 	position: relative;
 	cursor: pointer;
-	border: 1px solid #d8d8d8;
+	border: 1px solid #908e8e;
 }
 .lumen-edit-toolbar .lumen-edit-button.lumen-trash img{
 	width: 28px;
