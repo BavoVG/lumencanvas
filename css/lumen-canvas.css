@@ -16,7 +16,7 @@
     cursor: default;
     opacity: 0.3
 }
-.lumen-canvas .lumen-drawing {
+.lumen-canvas.toolbar-at-top .lumen-drawing {
     bottom: 0;
     top: 0;
 }
@@ -41,7 +41,7 @@
 .lumen-canvas {
     position: relative;
     background-color: #ddd;
-    border: 1px solid #8a8a8a;
+    border: 1px solid #099;
     min-height: 400px;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -50,7 +50,6 @@
     -ms-user-select: none;
     -ms-touch-action: none;
     user-select: none;
-    border-top: 1px solid #ccc;
 }
 .lumen-canvas,
 .lumen-canvas * {
@@ -68,7 +67,7 @@
     left: 0;
     bottom: 0;
     width: 61px;
-    background-color: #d6d6d6;
+    background-color: #e6e6e6
 }
 .lumen-canvas .lumen-drawing {
     right: 0;
@@ -101,7 +100,7 @@
 }
 .lumen-canvas .lumen-picker {
     z-index: 2;
-    border-right: 1px solid #8c8c8c;
+    border-right: 1px solid #099;
 }
 .lumen-canvas .lumen-picker .toolbar-button {
     width: 30px;
@@ -153,6 +152,7 @@
 .lumen-canvas .lumen-picker .lumen-redo,
 .lumen-canvas .lumen-picker .lumen-zoom-in,
 .lumen-canvas .lumen-picker .lumen-zoom-out,
+.lumen-canvas .lumen-picker .lumen-reset-zoom,
 .lumen-canvas .lumen-picker .lumen-color-fill,
 .lumen-canvas .lumen-picker .lumen-insert-equation {
     background-size: 80% auto;
@@ -246,6 +246,22 @@
 	right: 15px;
 	z-index: 1000;
 }
+
+.lumen-canvas .lumen-picker .lumen-reset-zoom{
+	padding-top: 4px;
+    font-size: 14px;
+    width: 100%;
+    line-height: 16px;
+    clear: both;
+    /*height: 62px;*/
+    height: 26px;
+    border-right: 0px;
+	background-size: 100%;
+}
+.lumen-canvas .lumen-picker .lumen-reset-zoom img{
+	width: 18px;
+	height: 18px;
+}
 .lumen-options.horz-toolbar .lumen-zoom-in,
 .lumen-options.horz-toolbar .lumen-zoom-out{
 	width: 25px;
@@ -265,9 +281,10 @@
 }
 .lumen-canvas .horz-toolbar .square-toolbar-button {
     border: 2px solid transparent;
-    border-radius: 5px;
+    border-radius: 50%;
     margin: 1px 5px;
     /* border:1px solid #aaa; */
+    
     width: 35px;
     height: 35px;
     float: left;
@@ -312,7 +329,7 @@
 .lumen-canvas.toolbar-at-bottom .polygon-toolbar {
     top: -100%
 }
-.lumen-canvas .polygon-toolbar {
+.lumen-canvas.toolbar-at-top .polygon-toolbar {
     top: 100%
 }
 .lumen-canvas .lumen-options {
@@ -411,19 +428,19 @@
     width: 29px;
     border-radius: 0px !important;
 }
-.lumen-canvas .lumen-options {
+.lumen-canvas.toolbar-at-top .lumen-options {
     bottom: 0px;
-    border-top: 1px solid #8c8c8c;
+    border-top: 1px solid #099;
     padding: 5px 10px;
     height: 50px;
-    background: #d6d6d6;
-    /* background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJod…EiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+); */
+    background: #ffffff;
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJod…EiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
     background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
-    /* background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #e5e5e5)); */
-    /* background: -webkit-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #e5e5e5));
+    background: -webkit-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
     background: -o-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
     background: -ms-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
-    /* background: linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%); */
+    background: linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%);
     filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5', GradientType=0);
 }
 .lumen-canvas .color-well label {
@@ -481,13 +498,28 @@
 	height: 30px;
 	position: relative;
 	cursor: pointer;
-	border: 1px solid #908e8e;
+	border: 1px solid #d8d8d8;
 }
 .lumen-edit-toolbar .lumen-edit-button.lumen-trash img{
 	width: 28px;
     height: 25px;
     top: 3px;
     position: relative;
+}
+.lumen-edit-toolbar .lumen-edit-button.lumen-copy img{
+	width: 72px;
+    left: 4px;
+    top: 3px;
+}
+.lumen-edit-toolbar .lumen-edit-button.lumen-cut img{
+	width: 82px;
+    left: -24px;
+    top: 2px;
+}
+.lumen-edit-toolbar .lumen-edit-button.lumen-paste img{
+	width: 70px;
+    left: -45px;
+    top: 2px;
 }
 /*Edit toolbar*/
 

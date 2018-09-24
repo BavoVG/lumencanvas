@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, user-scalable=yes, width=device-width">
 	<title>Lumen Canvas Paint</title>
 	<meta name="Description" content="LumenCanvas is a JavaScript drawing tool based on FabricJS and JQuery. LumenCanvas is an HTML5 paint tool that gives you the ability to draw and save you drawing as JSON, SNG and PNG.">
 	<meta name="Keywords" content="javascript paint,js paint,jquery paint, jquery drawing tool, js drawing tool, html5 paint, html paint,canvas paint, canvas drawing tool">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	
+
 	<link href="https://fonts.googleapis.com/css?family=Rancho" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 
@@ -19,7 +21,8 @@
 	<link rel="stylesheet" href="css/spectrum.css">
     <script src="js/spectrum.js"></script>
 	<style>
-	@media (max-width: 760px){
+	html, body {width: 100%;}
+	@media screen and (max-width: 760px){
 		body aside {
 			width: 100%;
 			min-height: auto;
@@ -31,6 +34,9 @@
 		html body{
 			width: 96%;
 			margin: 0 2%;
+		}
+		body section h3{
+			font-family: sans-serif;
 		}
 	}
 	*{font-family: 'Open Sans', sans-serif;}
@@ -95,6 +101,7 @@
 		border-radius: 4px;
 		padding: 2px 12px;
 		margin: 35px 0px;
+		overflow: auto;
 	}
 	pre{
 		font-family: Monaco, Consolas, "Lucida Console", monospace;
@@ -204,7 +211,7 @@
 		<section>
 			<h2 style="margin-top: 0px;">Introduction</h2>
 			<h3>LumenCanvas is an open source HTML5 drawing tool based on Fabric.js & JQuery. You can use it to embed drawing boards in web pages. You can save the drawings as a string or JSON and you can retrive it again. LumenCanvas is an object based drawing tool. You can move the drawn objects around and change the border of the filling color.</h3>
-			<div id="drawing-canvas" class="drawing-canvas" style="height: 600px; margin: 0 auto;"></div>
+			<div id="drawing-canvas" class="drawing-canvas toolbar-at-top" style="height: 600px; margin: 0 auto;"></div>
 			<br>
 			<br>
 			<p>Lumen Canvas&#8217;s features:</p>
@@ -238,7 +245,7 @@
         <span style="color:#062873;">&lt;script</span> src="js/lumen-canvas.js"&gt;<span style="color:#062873;">&lt;/script&gt;</span>
     <span style="color:#062873;">&lt;/head&gt;</span>
     <span style="color:#062873;">&lt;body&gt;</span>
-        <span style="color:#062873;">&lt;div id="drawing-canvas" class="drawing-canvas" style="height: 600px; margin: 0 auto;"&gt;<span style="color:#062873;">&lt;/div&gt;</span>
+        <span style="color:#062873;">&lt;div id="drawing-canvas" class="drawing-canvas toolbar-at-top" style="height: 600px; margin: 0 auto;"&gt;<span style="color:#062873;">&lt;/div&gt;</span>
         <span style="color:#062873;">&lt;script&gt;
             <span style="color:#3822b5;">new</span> <span style="color:#828282;">LumenCanvas</span> <span style="color:#000;">({</span>
                 <span style="color:#6858b9;">selector</span> : <span style="color:#828282;">"#drawing-canvas"</span>
@@ -253,7 +260,7 @@
 		<section id="examples">
 			<div class="canvas-example">
 				<h2>Canvas with watermark</h2>
-				<div id="drawing-canvas2" class="drawing-canvas" style="height: 600px; margin: 0 auto;"></div>
+				<div id="drawing-canvas2" class="drawing-canvas toolbar-at-top" style="height: 600px; margin: 0 auto;"></div>
 				<div class="code-section">
 <pre>
 <span style="color:#3822b5;">new</span> <span style="color:#828282;">LumenCanvas</span> <span style="color:#000;">({</span>
@@ -271,7 +278,7 @@
 			
 			<div class="canvas-example">
 				<h2>Export Canvas SVG & JSON</h2>
-				<div id="drawing-canvas3" class="drawing-canvas" style="height: 600px; margin: 0 auto;"></div>
+				<div id="drawing-canvas3" class="drawing-canvas toolbar-at-top" style="height: 600px; margin: 0 auto;"></div>
 				<br>
 				<button id="export-svg" class="btn btn-info">Export SVG</button> &nbsp;&nbsp;&nbsp;
 				<button id="export-json" class="btn btn-info">Export JSON</button>
@@ -306,7 +313,7 @@ $(<span style="color:#828282;">"#export-json"</span>).on(<span style="color:#828
 			
 			<div class="canvas-example">
 				<h2>Import JSON</h2>
-				<div id="drawing-canvas4" class="drawing-canvas" style="height: 600px; margin: 0 auto;"></div>
+				<div id="drawing-canvas4" class="drawing-canvas toolbar-at-top" style="height: 600px; margin: 0 auto;"></div>
 				<br>
 				<button id="import-json" class="btn btn-info">Set Data</button> &nbsp;&nbsp;&nbsp;
 				<h4>JSON Input</h4>
